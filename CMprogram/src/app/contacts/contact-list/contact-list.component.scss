@@ -12,5 +12,9 @@ div.card-header {
   div.row > div.col-xs-12{
     display:flex;
     justify-content: space-between;
+    button {
+      line-height:2.5rem;
+      margin: 1.5rem;
+    }
   }
 }

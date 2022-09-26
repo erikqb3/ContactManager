@@ -18,4 +18,9 @@ div.card-header div.row > div.col-xs-12 {
       -ms-flex-pack: justify;
           justify-content: space-between;
 }
+
+div.card-header div.row > div.col-xs-12 button {
+  line-height: 2.5rem;
+  margin: 1.5rem;
+}
 /*# sourceMappingURL=contact-list.component.css.map */
