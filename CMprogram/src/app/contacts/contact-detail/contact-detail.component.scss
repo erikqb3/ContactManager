@@ -1,0 +1,36 @@
+div.panel{
+  border: 1px solid rgba(150,150,150,1);
+}
+div.row {
+  display:flex;
+  div.col-xs-6{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+  }
+}
+
+div.card-header {
+  background-color: rgba(200,200,200,1);
+  padding: 0 0 2.5rem 0;
+  div.row > div.col-xs-6.btn-group{
+    display:flex;
+    // justify-content: space-evenly;
+    button {
+      margin: 0 5px;
+    }
+  }
+}
+
+div.card-body > div.row{
+  flex-direction: column;
+  padding: 1rem 2.5rem;
+  height: 15rem;
+  div.col-xs-12{
+    line-height: 3rem;
+    font-weight: bolder;
+    span {
+      font-weight: normal;
+    }
+  }
+}

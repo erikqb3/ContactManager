@@ -1,0 +1,16 @@
+
+div.col-xs-12 {
+  // padding:0;
+}
+div.panel{
+  border: 1px solid rgba(150,150,150,1);
+}
+div.card-header {
+  justify-content: space-between;
+  background-color: rgba(200,200,200,1);
+  padding: 0 15px;
+  div.row > div.col-xs-12{
+    display:flex;
+    justify-content: space-between;
+  }
+}
