@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "AAAA,AAAA,KAAK,CAAC;EACJ,SAAS,EAAE,MAAM;EACjB,WAAW,EAAE,IAAI;CAChB;;AACD,AAAA,eAAe,CAAC;EAChB,YAAY,EAAE,IAAI;EAClB,aAAa,EAAE,IAAI;CAClB",
+    "sources": [
+        "message-list.component.scss"
+    ],
+    "names": [],
+    "file": "message-list.component.css"
+}

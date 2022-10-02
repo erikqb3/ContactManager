@@ -10,22 +10,10 @@
   <div class="card-body">
     <div class="row">
       <div class="col-xs-12">
-        <a 
-          href="#" 
-          class="list-group-item clearfix" 
-          *ngFor="let contact of contacts">
-          <div class="pull-left">
-            <h4 class="list-group-item-heading">{{ contact.name }}</h4>
-            <!-- <p class="list-group-item-text">{{ contact.description }}</p> -->
-          </div>
-          <figure class="pull-right">
-            <img 
-              [src]="contact.imageUrl" 
-              alt="{{ contact.name }}" 
-              class="img-responsive" 
-              style="max-height: 50px;">
-          </figure>
-        </a>
+        <app-contact-item
+        *ngFor="let contact_element of contacts"
+        [contact]="contact_element"
+        (contactSelected)="onContactSelected(contact_element)"></app-contact-item>
         <!-- <app-contact-item></app-contact-item> -->
       </div>
     </div>

@@ -2,12 +2,12 @@
   <div class="card-header">
     <div class="row">
       <div class="col-xs-6">
-        <h1> {{ contacts[0].name }} </h1>
+        <h1> {{ contact.name }} </h1>
       </div>
     </div>
     <div class="row">
       <div class="col-xs-6">
-        <img [src]="contacts[0].imageUrl" alt="" class="img-responsive">
+        <img [src]="contact.imageUrl" alt="" class="img-responsive">
       </div>
       <div class="col-xs-6 btn-group">
         <button class="btn btn-primary">Edit</button>
@@ -18,10 +18,10 @@
   <div class="card-body">
     <div class="row">
       <div class="col-xs-12">
-        Email: <span>{{ contacts[0].email }}</span>
+        Email: <span>{{ contact.email }}</span>
       </div>
       <div class="col-xs-12">
-        Phone:  <span>{{ contacts[0].phone }}</span>
+        Phone:  <span>{{ contact.phone }}</span>
       </div>
     </div>
   </div>

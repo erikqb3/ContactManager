@@ -7,4 +7,9 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'CMprogram';
+  selectedFeature="contacts";
+
+  switchView(feature:string){
+    this.selectedFeature = feature;
+  };
 }
