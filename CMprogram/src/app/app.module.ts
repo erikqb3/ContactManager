@@ -14,7 +14,8 @@ import { MessageEditComponent } from './components/messages/message-edit/message
 import { DocumentListComponent } from './components/documents/document-list/document-list.component';
 import { DocumentItemComponent } from './components/documents/document-list/document-item/document-item.component';
 import { DocumentDetailComponent } from './components/documents/document-detail/document-detail.component';
-import { DropdownDirective } from './shared/dropdown.directive';
+import { DropdownDirective } from './directives/dropdown.directive';
+import { CloseDropDownsDirective } from './directives/close-drop-downs.directive';
 
 @NgModule({
   declarations: [
@@ -32,6 +33,7 @@ import { DropdownDirective } from './shared/dropdown.directive';
     DocumentItemComponent,
     DocumentDetailComponent,
     DropdownDirective,
+    CloseDropDownsDirective,
   ],
   imports: [
     BrowserModule

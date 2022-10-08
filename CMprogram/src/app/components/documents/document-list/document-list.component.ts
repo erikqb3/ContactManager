@@ -13,6 +13,11 @@ export class DocumentListComponent implements OnInit {
     new Document(3,"COMM 315","Design for Social Media","url",[]),
     new Document(4,"CIT 365",".Net Software Development","url",[]),
     new Document(4,"WDD 430","Web Full-Stack Development","url",[]),
+    new Document(5,"Dance 180M","Beginning Social Dance","url",[]),
+    new Document(6,"WDD331R","Advanced CSS","url",[]),
+    new Document(7,"COMM 315","Design for Social Media","url",[]),
+    new Document(8,"CIT 365",".Net Software Development","url",[]),
+    new Document(9,"WDD 430","Web Full-Stack Development","url",[]),
   ]
   constructor() { }
 

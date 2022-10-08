@@ -10,7 +10,7 @@
       <app-document-item
       *ngFor="let document_element of documents"
       [document]="document_element"
-      (mouseover)="onSelectedDocument(document_element)"
+      (click)="onSelectedDocument(document_element)"
 
       ></app-document-item>
     </div>
