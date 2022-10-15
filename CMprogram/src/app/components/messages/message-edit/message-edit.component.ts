@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild, ElementRef, EventEmitter, Output } from '@angular/core';
 import { Message } from "../message.module";
+import { MessageService } from '../message.service';
 
 
 @Component({
@@ -13,7 +14,7 @@ export class MessageEditComponent implements OnInit {
   @Output() addMessageEvent = new EventEmitter<Message>(); 
   // @Output() editsCleared_EE = new EventEmitter<void>();
 
-  constructor() { }
+  constructor(private messageService: MessageService) { }
 
   ngOnInit(): void {
   }
@@ -21,12 +22,11 @@ export class MessageEditComponent implements OnInit {
   onSendMessage(){
     const subject = this.subjectInputRef.nativeElement.value;
     const msgText = this.msgTextInputRef.nativeElement.value;
-    const sender = "User";
-    const date = new Date();
-    const newMessage = new Message(0,date,subject,msgText,sender);
-    console.log(date.getTime())
+    const sender = "7";
+    const newMessage = new Message("",subject,msgText,sender);
     if ((subject) && (msgText)){
-      this.addMessageEvent.emit(newMessage);
+      // this.addMessageEvent.emit(newMessage);
+      this.messageService.addMessage(newMessage);
     }
     else {
       alert("Write a message with a subject!");
