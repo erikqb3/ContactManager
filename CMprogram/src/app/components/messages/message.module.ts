@@ -1,15 +1,13 @@
 export class Message {
-  public id: number;
-  public date: Date;
+  public id: string;
   public subject: string;
   public msgText: string;
-  public senderName: string; 
+  public sender: string; 
   
-  constructor(id: number, date:Date, subject:string, msgText:string, senderName:string){
+  constructor(id: string, subject:string, msgText:string, sender:string){
     this.id = id;
-    this.date = date;
     this.subject = subject;
     this.msgText = msgText;
-    this.senderName = senderName;
+    this.sender = sender;
  } 
 }
