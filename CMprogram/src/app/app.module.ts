@@ -14,8 +14,10 @@ import { MessageEditComponent } from './components/messages/message-edit/message
 import { DocumentListComponent } from './components/documents/document-list/document-list.component';
 import { DocumentItemComponent } from './components/documents/document-list/document-item/document-item.component';
 import { DocumentDetailComponent } from './components/documents/document-detail/document-detail.component';
+import { DocumentEditComponent } from './components/documents/document-edit/document-edit.component';
 import { DropdownDirective } from './directives/dropdown.directive';
 import { CloseDropDownsDirective } from './directives/close-drop-downs.directive';
+import { AppRoutingModule } from './app.routing.module';
 
 @NgModule({
   declarations: [
@@ -32,11 +34,13 @@ import { CloseDropDownsDirective } from './directives/close-drop-downs.directive
     DocumentListComponent,
     DocumentItemComponent,
     DocumentDetailComponent,
+    DocumentEditComponent,
     DropdownDirective,
     CloseDropDownsDirective,
   ],
   imports: [
-    BrowserModule
+    BrowserModule,
+    AppRoutingModule
   ],
   providers: [],
   bootstrap: [AppComponent]
