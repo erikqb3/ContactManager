@@ -9,11 +9,11 @@ import { DocumentService } from './document.service';
 })
 export class DocumentsComponent implements OnInit, OnDestroy {
   selectedDocument: Document;
-  subscription: Subscription;
+  documentSelectedElement_sub: Subscription;
   constructor(private documentService: DocumentService) { }
 
   ngOnInit(): void {
-    this.subscription = this.documentService.documentSelectedEvent
+    this.documentSelectedElement_sub = this.documentService.documentSelectedEvent
     .subscribe(
       (document: Document) => {
         this.selectedDocument = document;
@@ -21,7 +21,7 @@ export class DocumentsComponent implements OnInit, OnDestroy {
     )
   }
   ngOnDestroy(): void {
-    this.subscription.unsubscribe;
+    this.documentSelectedElement_sub.unsubscribe;
   }
 
 }

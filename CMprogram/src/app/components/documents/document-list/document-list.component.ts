@@ -10,7 +10,7 @@ import { Subscription } from 'rxjs';
 })
 export class DocumentListComponent implements OnInit, OnDestroy {
   documents: Document[] = [];
-  subscription: Subscription;
+  documentListChangedEvent_sub: Subscription;
 
   constructor(private documentService: DocumentService,
               private router: Router,
@@ -18,7 +18,7 @@ export class DocumentListComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.documents = this.documentService.getDocuments();
-    this.subscription = this.documentService.documentListChangedEvent 
+    this.documentListChangedEvent_sub = this.documentService.documentListChangedEvent 
       .subscribe(
         (documentList: Document[]) => {
           this.documents = documentList;
@@ -26,7 +26,7 @@ export class DocumentListComponent implements OnInit, OnDestroy {
       )
   }
   ngOnDestroy():void {
-    this.subscription.unsubscribe;
+    this.documentListChangedEvent_sub.unsubscribe;
   }
 
 }
