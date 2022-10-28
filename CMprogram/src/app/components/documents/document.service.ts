@@ -10,18 +10,28 @@ export class DocumentService {
   documentSelectedEvent = new Subject<Document>();
   // documentChangedEvent = new Subject<Document[]>();
   documentListChangedEvent = new Subject<Document[]>();
-  private maxId: number;
+
+  private maxDocId: number;
   private currentId: number;
+  private documents: Document[] = [];
 
 
-  documents: Document[] = [];
   public gottenDocument: Document;
 
   constructor() { 
     this.documents = MOCKDOCUMENTS;
+    this.maxDocId = this.getMaxId();
   }
 
-  addDocument(){}
+  addDocument(newDoc: Document){
+    if ((newDoc == null)||(newDoc == undefined)){
+      return;
+    }
+    this.maxDocId++;
+    newDoc.id = this.maxDocId.toString();
+    this.documents.push(newDoc);
+    this.documentListChangedEvent.next(this.documents.slice());
+  }
   deleteDocument(document: Document){
     if (!document){
       return;
@@ -50,16 +60,33 @@ export class DocumentService {
     return this.gottenDocument;
   }
   getMaxId(): number {
-    this.maxId = 0;
+    let maxId = 0;
 
     this.documents.forEach(document => {
       this.currentId = +document.id;
-      if (this.currentId > this.maxId){
-        this.maxId = this.currentId;
+      if (this.currentId > maxId){
+        maxId = this.currentId;
       }
     });
 
-    return this.maxId;
+    return maxId;
   }
-  updateDocument(){}
+  updateDocument(originalDoc: Document, newDoc: Document){
+    switch (originalDoc || newDoc){
+      case null:
+      case undefined:
+        return;
+    }
+
+    let pos = this.documents.indexOf(originalDoc);
+    if (pos < 0) {
+      return;
+    }
+
+    newDoc.id = originalDoc.id;
+    this.documents[pos] = newDoc;
+    this.documentListChangedEvent.next(this.documents.slice());
+    
+
+  }
 }
