@@ -11,6 +11,7 @@ import { ContactService } from './contact.service';
 export class ContactsComponent implements OnInit, OnDestroy {
   selectedContact : Contact;
   contactSelectedEvent_sub : Subscription;
+  
   constructor(private contactService: ContactService) { }
 
   ngOnInit(): void {
