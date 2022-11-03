@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './components/header/header.component';
@@ -18,6 +19,7 @@ import { DocumentEditComponent } from './components/documents/document-edit/docu
 import { DropdownDirective } from './directives/dropdown.directive';
 import { CloseDropDownsDirective } from './directives/close-drop-downs.directive';
 import { AppRoutingModule } from './app.routing.module';
+
 
 @NgModule({
   declarations: [
@@ -40,7 +42,8 @@ import { AppRoutingModule } from './app.routing.module';
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
