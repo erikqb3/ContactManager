@@ -10,6 +10,7 @@ export class DocumentService {
   documentSelectedEvent = new Subject<Document>();
   // documentChangedEvent = new Subject<Document[]>();
   documentListChangedEvent = new Subject<Document[]>();
+  startedEditing = new Subject<number>();
 
   private maxDocId: number;
   private currentId: number;
@@ -51,7 +52,7 @@ export class DocumentService {
 
   getDocument(id: string): Document {
     this.documents.forEach(singleDocument => {
-      console.log(singleDocument);
+      // console.log(singleDocument);
       if (id == singleDocument.id){
         this.gottenDocument = singleDocument;
       }

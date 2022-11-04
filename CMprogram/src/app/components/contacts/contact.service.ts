@@ -45,7 +45,7 @@ export class ContactService {
    }
    getContact(id: string): Contact {
     this.contacts.forEach(singleContact => {
-      console.log(singleContact);
+      // console.log(singleContact);
       if (id == singleContact.id){
         this.gottenContact = singleContact;
       }
