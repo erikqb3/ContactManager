@@ -9,6 +9,7 @@ import { ContactDetailComponent } from './components/contacts/contact-detail/con
 import { ContactListComponent } from './components/contacts/contact-list/contact-list.component';
 import { DocumentsComponent } from './components/documents/documents.component';
 import { ContactItemComponent } from './components/contacts/contact-list/contact-item/contact-item.component';
+import { ContactEditComponent } from './components/contacts/contact-edit/contact-edit.component';
 import { MessageListComponent } from './components/messages/message-list/message-list.component';
 import { MessageItemComponent } from './components/messages/message-list/message-item/message-item.component';
 import { MessageEditComponent } from './components/messages/message-edit/message-edit.component';
@@ -20,6 +21,9 @@ import { DropdownDirective } from './directives/dropdown.directive';
 import { CloseDropDownsDirective } from './directives/close-drop-downs.directive';
 import { AppRoutingModule } from './app.routing.module';
 
+import { DndModule } from 'ng2-dnd';
+
+
 
 @NgModule({
   declarations: [
@@ -30,6 +34,7 @@ import { AppRoutingModule } from './app.routing.module';
     ContactListComponent,
     DocumentsComponent,
     ContactItemComponent,
+    ContactEditComponent,
     MessageListComponent,
     MessageItemComponent,
     MessageEditComponent,
@@ -43,7 +48,8 @@ import { AppRoutingModule } from './app.routing.module';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    FormsModule
+    FormsModule,
+    DndModule.forRoot(),
   ],
   providers: [],
   bootstrap: [AppComponent]

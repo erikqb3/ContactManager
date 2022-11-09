@@ -1,9 +1,11 @@
 import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
-import { Document } from '../document.model'
 import { NgForm } from '@angular/forms';
-import { DocumentService } from '../document.service';
 import { ActivatedRoute, Params, Router } from '@angular/router';
+
 import { Subscription } from 'rxjs';
+
+import { Document } from '../document.model'
+import { DocumentService } from '../document.service';
 
 @Component({
   selector: 'app-document-edit',
@@ -19,7 +21,7 @@ export class DocumentEditComponent implements OnInit, OnDestroy  {
   document: Document; //editedDocument
   subscription: Subscription;
   editMode: boolean = false;
-  editedItemIndex: number;
+  editedItemIndex: string;
   editedItem: Document;
 
 
@@ -33,14 +35,16 @@ export class DocumentEditComponent implements OnInit, OnDestroy  {
     this.subscription = this.route.params
       .subscribe(
       (params: Params) => {
-        this.editedItemIndex = +params['id'];
-        console.log(params);
-        if (params == null || params == undefined) {
+        this.editedItemIndex = params['id'];
+        console.log(this.editedItemIndex);
+        if (this.editedItemIndex == null || this.editedItemIndex == undefined) {
           this.editMode = false;
+          console.log("HELLOW")
           return;
         }
+        console.log(this.editMode)
         // this.editMode = params['id'] != null;
-        this.originalDoc = this.docService.getDocument(this.editedItemIndex.toString())
+        this.originalDoc = this.docService.getDocument(this.editedItemIndex)
         if (this.originalDoc == null || this.originalDoc == undefined){ // !originalDoc
           return;
         }

@@ -5,7 +5,7 @@
         <h1> {{ contact.name }} </h1>
       </div>
     </div>
-    <div class="row">
+    <div *ngIf="contact.imageUrl !='_'" class="row">
       <div class="col-xs-6">
         <img [src]="contact.imageUrl" alt="" class="img-responsive">
       </div>

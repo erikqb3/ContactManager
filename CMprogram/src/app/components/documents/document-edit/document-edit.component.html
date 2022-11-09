@@ -19,8 +19,11 @@
             class="form-control"
             size="120"
             max="120">
+          </div>
         </div>
-      </div>
+        <div *ngIf="!name.valid && name.touched" class="col-sm-12 alert alert-danger">
+          <p>Dude, Give us a name!?!?!</p>
+        </div>
 
       <div class="row">
         <div class="col-sm-12 form-group">
