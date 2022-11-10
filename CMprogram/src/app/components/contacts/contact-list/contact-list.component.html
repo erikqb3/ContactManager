@@ -10,10 +10,18 @@
   <div class="card-body">
     <div class="row">
       <div class="col-xs-12">
-        <app-contact-item *ngFor="let contact_element of contacts" [contact]="contact_element" (contactSelected)="onContactSelected(contact_element)"></app-contact-item>
+        <app-contact-item
+          *ngFor="let contact_element of contacts"
+          [contact]="contact_element"
+          dnd-draggable
+          [dragEnabled]="true"
+          [dragData]="contact_element"
+          [dropZones]="['contactGroup_dZone']"
+          (contactSelected)="onContactSelected(contact_element)"
+        ></app-contact-item>
         <!-- <app-contact-item *ngFor="let contact_element of contacts" [contact]="contact_element"></app-contact-item> -->
         <!-- <app-contact-item></app-contact-item> -->
       </div>
     </div>
   </div>
-</div> 
+</div>
