@@ -20,6 +20,7 @@ import { DocumentEditComponent } from './components/documents/document-edit/docu
 import { DropdownDirective } from './directives/dropdown.directive';
 import { CloseDropDownsDirective } from './directives/close-drop-downs.directive';
 import { AppRoutingModule } from './app.routing.module';
+import { ContactsFilterPipe } from './components/contacts/contacts-filter.pipe'
 
 import { DndModule } from 'ng2-dnd';
 
@@ -44,6 +45,7 @@ import { DndModule } from 'ng2-dnd';
     DocumentEditComponent,
     DropdownDirective,
     CloseDropDownsDirective,
+    ContactsFilterPipe
   ],
   imports: [
     BrowserModule,
