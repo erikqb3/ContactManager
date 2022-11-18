@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { Contact } from 'src/app/components/contacts/contact.model';
 import { ContactService } from 'src/app/components/contacts/contact.service';
-import { Message } from '../../message.module';
+import { Message } from '../../message.model';
 import { MessageService } from '../../message.service';
 
 
@@ -24,8 +24,9 @@ export class MessageItemComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     const contact: Contact = this.contactService.getContact(this.message.sender);
-    this.messageSender = contact.name;
-    this.messages = this.messageService.getMessages();
+    // console.log(this.message.sender, contact);
+    this.message.sender = contact.name;
+    this.messageService.getMessages();
     this.messageChangedEvent_sub = this.messageService.messageChangedEvent
       .subscribe(
         (messages: Message[]) =>{

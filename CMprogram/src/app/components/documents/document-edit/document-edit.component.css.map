@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "AAAA,AAAA,KAAK,AAAA,WAAW,CAAC;EACf,MAAM,EAAE,aAAa;CACtB",
+    "sources": [
+        "document-edit.component.scss"
+    ],
+    "names": [],
+    "file": "document-edit.component.css"
+}

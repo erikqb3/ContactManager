@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, ElementRef, EventEmitter, Output } from '@angular/core';
-import { Message } from "../message.module";
+import { Message } from "../message.model";
 import { MessageService } from '../message.service';
 
 
