@@ -1,6 +1,7 @@
 import { ContactsComponent } from "./components/contacts/contacts.component";
 import { DocumentsComponent } from "./components/documents/documents.component";
 import { MessageListComponent } from "./components/messages/message-list/message-list.component";
+import { MessageResolverService } from "./components/messages/message-resolver.service";
 import { NgModule } from "@angular/core";
 import { Routes, RouterModule } from "@angular/router";
 import { DocumentEditComponent } from "./components/documents/document-edit/document-edit.component";
@@ -16,7 +17,10 @@ const appRoutes: Routes = [
     { path: ':id', component: DocumentDetailComponent},
     { path: ':id/edit', component:DocumentEditComponent}
   ]},
-  { path: 'messages', component: MessageListComponent},
+  { path: 'messages', 
+    component: MessageListComponent,
+    resolve: [MessageResolverService]
+  },
   { path: 'contacts', component: ContactsComponent, children: [
     { path: 'new', component: ContactEditComponent},
     { path: ':id', component: ContactDetailComponent},

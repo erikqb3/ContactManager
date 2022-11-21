@@ -41,7 +41,6 @@ div.card-body > div.row {
       -ms-flex-direction: column;
           flex-direction: column;
   padding: 1rem 2.5rem;
-  height: 15rem;
 }
 
 div.card-body > div.row div.col-xs-12 {

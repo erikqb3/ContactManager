@@ -1,15 +1,18 @@
 import { EventEmitter, Injectable } from '@angular/core';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Subject } from 'rxjs';
 import { Document } from "./document.model"
-import { MOCKDOCUMENTS } from './MOCKDOCUMENTS';
+// import { MOCKDOCUMENTS } from './MOCKDOCUMENTS';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DocumentService {
   documentSelectedEvent = new Subject<Document>();
-  // documentChangedEvent = new Subject<Document[]>();
   documentListChangedEvent = new Subject<Document[]>();
+  startedEditing = new Subject<number>();
+  error=new Subject<string>();
+  fireBase_link = "https://cms-project-c8a63-default-rtdb.firebaseio.com/documents.json"
 
   private maxDocId: number;
   private currentId: number;
@@ -18,8 +21,10 @@ export class DocumentService {
 
   public gottenDocument: Document;
 
-  constructor() { 
-    this.documents = MOCKDOCUMENTS;
+  constructor(
+    private http: HttpClient
+  ) { 
+    this.documents = [];
     this.maxDocId = this.getMaxId();
   }
 
@@ -30,7 +35,7 @@ export class DocumentService {
     this.maxDocId++;
     newDoc.id = this.maxDocId.toString();
     this.documents.push(newDoc);
-    this.documentListChangedEvent.next(this.documents.slice());
+    this.storeDocument();
   }
   deleteDocument(document: Document){
     if (!document){
@@ -41,17 +46,47 @@ export class DocumentService {
       return;
     }
     this.documents.splice(pos,1);
-    this.documentListChangedEvent.next(this.documents.slice());
-    
+    // this.documentListChangedEvent.next(this.documents.slice());
+    this.storeDocument();
   
   }
-  getDocuments():Document[] {
-    return this.documents.slice();
+  getDocuments() {
+    this.http
+      .get<Document[]>(this.fireBase_link)
+      .subscribe(
+        (documents: Document[]) => {
+          this.documents = documents;
+          this.maxDocId = this.getMaxId();
+          this.documents.sort((a,b) => (a.name > b.name ? 1 : ((b.name > a.name) ? -1 :0)));
+          this.documentListChangedEvent.next(this.documents.slice());
+        },
+        // (error: any) => {
+        //   console.log(error);
+        // }
+        )
+    // return this.http.get<Document[]>(this.fireBase_link)
+    //   .subscribe(
+    //     ( documents: Document[] => {
+    //       this.documents = documents;
+    //       this.maxDocId = this.getMaxId();
+    //     }, (error: any) => {
+    //       console.log(error);
+    //     })
+    //   )
+    
+    // return this.http.get<Document[]>(this.fireBase_link)
+    //   .subscribe(documents:Document[] => {
+    //     this.documents = documents;
+    //   },
+    //   error => {
+    //     this.error.next(error.messsage)
+    //   })
+    // return this.documents.slice();
   }
 
   getDocument(id: string): Document {
     this.documents.forEach(singleDocument => {
-      console.log(singleDocument);
+      // console.log(singleDocument);
       if (id == singleDocument.id){
         this.gottenDocument = singleDocument;
       }
@@ -71,6 +106,20 @@ export class DocumentService {
 
     return maxId;
   }
+  storeDocument(){
+    const storedDocuments = this.documents;
+    this.http.put(this.fireBase_link, storedDocuments)
+      .subscribe(response => {
+        console.log(response);
+        this.documentListChangedEvent.next(this.documents.slice());
+      });
+  }
+
+  // setDocuments(documents: Document[]){
+  //   this.documents = documents;
+  //   this.documentListChangedEvent.next(this.documents.slice());
+  // }
+
   updateDocument(originalDoc: Document, newDoc: Document){
     switch (originalDoc || newDoc){
       case null:
@@ -85,7 +134,7 @@ export class DocumentService {
 
     newDoc.id = originalDoc.id;
     this.documents[pos] = newDoc;
-    this.documentListChangedEvent.next(this.documents.slice());
+    this.storeDocument();
     
 
   }

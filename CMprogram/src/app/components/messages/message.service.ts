@@ -1,21 +1,33 @@
 import { EventEmitter, Injectable } from '@angular/core';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Subject } from 'rxjs';
-import { Message } from './message.module';
-import { MOCKMESSAGES } from './MOCKMESSAGES';
+import { map, tap } from 'rxjs/operators';
+import { Message } from './message.model';
+import { Contact } from '../contacts/contact.model';
+// import { MOCKMESSAGES } from './MOCKMESSAGES';
 
 @Injectable({
   providedIn: 'root'
 })
 export class MessageService {
   messageChangedEvent = new Subject<Message[]>();
+  fireBase_mess = "https://cms-project-c8a63-default-rtdb.firebaseio.com/messages.json"
+  fireBase_contacts = "https://cms-project-c8a63-default-rtdb.firebaseio.com/contacts.json"
 
   private maxMessageId: number;
   private currentId: number;
   private messages: Message[] = [];
+  private contacts: Contact[] = [];
   public gottenMessage: Message;
+  public maxMessId: number;
+  public gottenContact: Contact;
 
-    constructor() {
-      this.messages = MOCKMESSAGES;
+    constructor(
+      private http: HttpClient
+    ) {
+      this.messages = [];
+      this.contacts = []
+      this.maxMessId = this.getMaxId();
     }
     addMessage(newMessage: Message){
       if ((newMessage == null)||(newMessage == undefined)){
@@ -24,8 +36,25 @@ export class MessageService {
       this.maxMessageId++;
       newMessage.id = this.maxMessageId.toString();
       this.messages.push(newMessage);
-      this.messageChangedEvent.next(this.messages.slice());
+      this.storeMessage();
      }
+
+    fetchMessages(){
+      return this.http
+        .get<Message[]>(this.fireBase_mess)
+          .pipe(
+            map(messages => {
+              return messages.map(message => {
+                return {
+                  ...message
+                }
+              });
+            }),tap(messages => {
+              this.setMessages(messages);
+            })
+          )
+      }
+
     getMaxId(): number {
       let maxId = 0;
   
@@ -37,8 +66,16 @@ export class MessageService {
       });
       return maxId;
     }
-    getMessages():Message[] {
-      return this.messages.slice();
+    getMessages(){
+      this.http
+        .get<Message[]>(this.fireBase_mess)
+          .subscribe(
+            (messages: Message[]) => {
+              this.messages = messages;
+              this.maxMessId = this.getMaxId();
+              this.messageChangedEvent.next(this.messages.slice());
+            }
+          )
     }
     getMessage(id: string): Message {
       this.messages.forEach(singleMessage => {
@@ -50,22 +87,40 @@ export class MessageService {
       );
       return this.gottenMessage;
     }
-    updateMessage(originalMessage: Message, newMessage: Message){
-      switch (originalMessage || newMessage){
-        case null:
-        case undefined:
-          return;
-      }
-  
-      let pos = this.messages.indexOf(originalMessage);
-      if (pos < 0) {
-        return;
-      }
-  
-      newMessage.id = originalMessage.id;
-      this.messages[pos] = newMessage;
+
+    setMessages(mesages: Message[]){
+      this.messages = mesages;
       this.messageChangedEvent.next(this.messages.slice());
+
     }
+
+    storeMessage(){
+      const storedMessages = this.messages;
+      this.http
+        .put(this.fireBase_mess, storedMessages)
+          .subscribe(response => {
+            this.messageChangedEvent.next(this.messages.slice());
+          })
+        
+    }
+    // updateMessage(originalMessage: Message, newMessage: Message){
+    //   switch (originalMessage || newMessage){
+    //     case null:
+    //     case undefined:
+    //       return;
+    //   }
+  
+    //   let pos = this.messages.indexOf(originalMessage);
+    //   if (pos < 0) {
+    //     return;
+    //   }
+  
+    //   newMessage.id = originalMessage.id;
+    //   this.messages[pos] = newMessage;
+    //   this.storeMessage();
+    // }
+
+
     // addMessage(message: Message){
     //   this.messages.push(message);
     //   this.messageChangedEvent.next(this.messages.slice());

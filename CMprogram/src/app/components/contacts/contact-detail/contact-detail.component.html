@@ -5,7 +5,7 @@
         <h1> {{ contact.name }} </h1>
       </div>
     </div>
-    <div class="row">
+    <div *ngIf="contact.imageUrl !='_'" class="row">
       <div class="col-xs-6">
         <img [src]="contact.imageUrl" alt="" class="img-responsive">
       </div>
@@ -17,11 +17,26 @@
   </div>
   <div class="card-body">
     <div class="row">
-      <div class="col-xs-12">
+      <div 
+        class="col-xs-12"
+        *ngIf="contact?.email">
         Email: <span>{{ contact.email }}</span>
       </div>
-      <div class="col-xs-12">
+      <div 
+        class="col-xs-12"
+        *ngIf="contact?.phone">
         Phone:  <span>{{ contact.phone }}</span>
+      </div>
+      <div class="row">
+        <div class="col-xs-12" style="padding-left:30px;">
+          Group Contacts
+          <app-contact-item
+            *ngFor="let contact_element of contact.group"
+            [contact]="contact_element"
+          ></app-contact-item>
+          <!-- <app-contact-item *ngFor="let contact_element of contacts" [contact]="contact_element"></app-contact-item> -->
+          <!-- <app-contact-item></app-contact-item> -->
+        </div>
       </div>
     </div>
   </div>
