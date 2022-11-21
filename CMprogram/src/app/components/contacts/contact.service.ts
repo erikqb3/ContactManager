@@ -57,16 +57,16 @@ export class ContactService {
           }
         )
    }
-   getContact(id: string): Contact {
-    this.contacts.forEach(singleContact => {
-      // console.log(singleContact);
-      if (id == singleContact.id){
-        this.gottenContact = singleContact;
-      }
+  getContact(id: string): Contact {
+  this.contacts.forEach(singleContact => {
+    // console.log(singleContact);
+    if (id == singleContact.id){
+      this.gottenContact = singleContact;
     }
-    );
-    return this.gottenContact;
-   }
+  }
+  );
+  return this.gottenContact;
+  }
    getMaxId(): number {
     let maxId = 0;
 

@@ -11,32 +11,34 @@ import { MessageService } from '../../message.service';
   templateUrl: './message-item.component.html',
   styleUrls: ['./message-item.component.css']
 })
-export class MessageItemComponent implements OnInit, OnDestroy {
+export class MessageItemComponent implements OnInit {
   @Input() message: Message;
-  messageChangedEvent_sub: Subscription;
+  // messageChangedEvent_sub: Subscription;
 
   messageSender: string;
-  messages: Message [];
+
 
   constructor(
     private contactService: ContactService, 
     private messageService: MessageService) { }
 
   ngOnInit(): void {
+    console.log(this.message);
     const contact: Contact = this.contactService.getContact(this.message.sender);
+    console.log(contact);
     // console.log(this.message.sender, contact);
-    this.message.sender = contact.name;
-    this.messageService.getMessages();
-    this.messageChangedEvent_sub = this.messageService.messageChangedEvent
-      .subscribe(
-        (messages: Message[]) =>{
-          this.messages = messages;
-        }
-      )
+    this.messageSender = contact.name;
+    // this.messageService.getMessages();
+    // this.messageChangedEvent_sub = this.messageService.messageChangedEvent
+    //   .subscribe(
+    //     (messages: Message[]) =>{
+    //       this.messages = messages;
+    //     }
+    //   )
   }
 
-  ngOnDestroy(): void {
-    this.messageChangedEvent_sub.unsubscribe;
-  }
+  // ngOnDestroy(): void {
+  //   this.messageChangedEvent_sub.unsubscribe;
+  // }
 
 }

@@ -1,7 +1,9 @@
 import { EventEmitter, Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Subject } from 'rxjs';
+import { map, tap } from 'rxjs/operators';
 import { Message } from './message.model';
+import { Contact } from '../contacts/contact.model';
 // import { MOCKMESSAGES } from './MOCKMESSAGES';
 
 @Injectable({
@@ -9,18 +11,22 @@ import { Message } from './message.model';
 })
 export class MessageService {
   messageChangedEvent = new Subject<Message[]>();
-  fireBase_link = "https://cms-project-c8a63-default-rtdb.firebaseio.com/messages.json"
+  fireBase_mess = "https://cms-project-c8a63-default-rtdb.firebaseio.com/messages.json"
+  fireBase_contacts = "https://cms-project-c8a63-default-rtdb.firebaseio.com/contacts.json"
 
   private maxMessageId: number;
   private currentId: number;
   private messages: Message[] = [];
+  private contacts: Contact[] = [];
   public gottenMessage: Message;
   public maxMessId: number;
+  public gottenContact: Contact;
 
     constructor(
       private http: HttpClient
     ) {
       this.messages = [];
+      this.contacts = []
       this.maxMessId = this.getMaxId();
     }
     addMessage(newMessage: Message){
@@ -32,6 +38,23 @@ export class MessageService {
       this.messages.push(newMessage);
       this.storeMessage();
      }
+
+    fetchMessages(){
+      return this.http
+        .get<Message[]>(this.fireBase_mess)
+          .pipe(
+            map(messages => {
+              return messages.map(message => {
+                return {
+                  ...message
+                }
+              });
+            }),tap(messages => {
+              this.setMessages(messages);
+            })
+          )
+      }
+
     getMaxId(): number {
       let maxId = 0;
   
@@ -45,7 +68,7 @@ export class MessageService {
     }
     getMessages(){
       this.http
-        .get<Message[]>(this.fireBase_link)
+        .get<Message[]>(this.fireBase_mess)
           .subscribe(
             (messages: Message[]) => {
               this.messages = messages;
@@ -64,10 +87,17 @@ export class MessageService {
       );
       return this.gottenMessage;
     }
+
+    setMessages(mesages: Message[]){
+      this.messages = mesages;
+      this.messageChangedEvent.next(this.messages.slice());
+
+    }
+
     storeMessage(){
       const storedMessages = this.messages;
       this.http
-        .put(this.fireBase_link, storedMessages)
+        .put(this.fireBase_mess, storedMessages)
           .subscribe(response => {
             this.messageChangedEvent.next(this.messages.slice());
           })
