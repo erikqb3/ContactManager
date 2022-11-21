@@ -2,6 +2,7 @@ import { EventEmitter, Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http'
 import { Subject } from 'rxjs';
 import { Contact } from './contact.model';
+import { map, tap } from 'rxjs/operators';
 // import { MOCKCONTACTS } from './MOCKCONTACTS';
 
 @Injectable({
@@ -45,6 +46,21 @@ export class ContactService {
     this.contacts.splice(pos,1);
     this.storeContact();
    }
+   fetchContacts(){
+    return this.http
+    .get<Contact[]>(this.fireBase_link)
+      .pipe(
+        map(messages => {
+          return messages.map(message => {
+            return {
+              ...message
+            }
+          });
+        }),tap(messages => {
+          this.setContacts(messages);
+        })
+      )
+   }
    getContacts(){
     this.http
       .get<Contact[]>(this.fireBase_link)
@@ -54,8 +70,9 @@ export class ContactService {
             this.maxContactId = this.getMaxId();
             this.contacts.sort((a,b) => (a.name > b.name ? 1 : ((b.name > a.name) ? -1 : 0)));
             this.contactChangedEvent.next(this.contacts.slice());
+            return this.contacts;
           }
-        )
+        );
    }
   getContact(id: string): Contact {
   this.contacts.forEach(singleContact => {
@@ -78,6 +95,10 @@ export class ContactService {
     });
     return maxId;
   }
+  setContacts(contacts: Contact[]){
+    this.contacts = contacts;
+    this.contactChangedEvent.next(this.contacts.slice());
+  }
   storeContact(){
     const storedContacts = this.contacts;
     this.http
@@ -97,7 +118,7 @@ export class ContactService {
     if (pos < 0) {
       return;
     }
-
+    console.log(newContact, originalContact);
     newContact.id = originalContact.id;
     this.contacts[pos] = newContact;
     this.storeContact();

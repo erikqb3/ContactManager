@@ -1,7 +1,8 @@
 import { EventEmitter, Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Subject } from 'rxjs';
-import { Document } from "./document.model"
+import { map,tap } from 'rxjs/operators';
+import { Document } from "./document.model";
 // import { MOCKDOCUMENTS } from './MOCKDOCUMENTS';
 
 @Injectable({
@@ -50,6 +51,23 @@ export class DocumentService {
     this.storeDocument();
   
   }
+
+  fetchDocument(){
+    return this.http
+    .get<Document[]>(this.fireBase_link)
+      .pipe(
+        map(messages => {
+          return messages.map(message => {
+            return {
+              ...message
+            }
+          });
+        }),tap(messages => {
+          this.setDocuments(messages);
+        })
+      )
+  }
+
   getDocuments() {
     this.http
       .get<Document[]>(this.fireBase_link)
@@ -105,6 +123,11 @@ export class DocumentService {
     });
 
     return maxId;
+  }
+  setDocuments(documents: Document[]){
+    this.documents = documents;
+    this.documentListChangedEvent.next(this.documents.slice());
+
   }
   storeDocument(){
     const storedDocuments = this.documents;

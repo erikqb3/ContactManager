@@ -13,6 +13,7 @@ import { MessageService } from '../../message.service';
 })
 export class MessageItemComponent implements OnInit {
   @Input() message: Message;
+  @Input() contact: Contact;
   // messageChangedEvent_sub: Subscription;
 
   messageSender: string;
@@ -24,8 +25,9 @@ export class MessageItemComponent implements OnInit {
 
   ngOnInit(): void {
     console.log(this.message);
+    console.log(this.contact);
     const contact: Contact = this.contactService.getContact(this.message.sender);
-    console.log(contact);
+    console.log(contact)
     // console.log(this.message.sender, contact);
     this.messageSender = contact.name;
     // this.messageService.getMessages();

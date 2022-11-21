@@ -2,20 +2,19 @@ import { Injectable } from "@angular/core";
 import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from "@angular/router";
 import { Observable } from "rxjs";
 import { ContactService } from "../contacts/contact.service";
-import { Message } from "./message.model";
-import { MessageService } from "./message.service";
+import { Document } from "./document.model";
+import { DocumentService } from "./document.service";
 
 @Injectable({providedIn: 'root'})
-export class MessageResolverService implements Resolve<Message[]>{
+export class DocumentResolverService implements Resolve<Document[]>{
   constructor(
-    private messageService: MessageService,
-    private contactService: ContactService) {
+    private documentService: DocumentService) {
     }
   resolve(
     route: ActivatedRouteSnapshot, 
     state: RouterStateSnapshot) {
-      const contacts = this.contactService.getContacts();
-      return this.messageService.fetchMessages();
+      const contacts = this.documentService.getDocuments();
+      return this.documentService.fetchDocument();
     
   }
 }

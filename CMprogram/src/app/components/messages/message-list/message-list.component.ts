@@ -1,5 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
+import { ContactService } from '../../contacts/contact.service';
 import { Message } from '../message.model'
 import { MessageService } from '../message.service';
 
@@ -14,7 +15,8 @@ export class MessageListComponent implements OnInit, OnDestroy {
   // addedMessage: Message;
 
   constructor(
-    private messageService: MessageService) { }
+    private messageService: MessageService,
+    private contactService: ContactService) { }
 
   ngOnInit(): void {
     // this.messages = this.messageService.getMessages();

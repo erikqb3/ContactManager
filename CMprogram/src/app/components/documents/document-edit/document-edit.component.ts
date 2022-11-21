@@ -82,7 +82,7 @@ export class DocumentEditComponent implements OnInit, OnDestroy  {
   }
   onSubmit(form: NgForm){
     const value = form.value;
-    const newDoc = new Document(this.docService.getMaxId().toString(), value.name, value.descript, value.url,[]);
+    const newDoc = new Document(this.docService.getMaxId().toString(), value.name, value.description, value.url,[]);
     if (this.editMode == true) {
       this.docService.updateDocument(this.originalDoc, newDoc);
     }
